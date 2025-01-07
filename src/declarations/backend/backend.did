@@ -1,0 +1,10 @@
+service: () -> {
+    citePaper: (text, text) -> (variant {Ok:record {id:text; title:text; content:text; reviews:vec text; votes:nat64; reviewStatus:text; author:principal; timestamp:nat64; abstract:text; citations:vec text}; Err:variant {InvalidInput:text; NotFound:text; NotAuthorized:text; AlreadyExists:text}});
+    getAuthorPapers: (principal) -> (vec record {id:text; title:text; content:text; reviews:vec text; votes:nat64; reviewStatus:text; author:principal; timestamp:nat64; abstract:text; citations:vec text}) query;
+    getPaper: (text) -> (variant {Ok:record {id:text; title:text; content:text; reviews:vec text; votes:nat64; reviewStatus:text; author:principal; timestamp:nat64; abstract:text; citations:vec text}; Err:variant {InvalidInput:text; NotFound:text; NotAuthorized:text; AlreadyExists:text}}) query;
+    getReputation: (principal) -> (nat64) query;
+    listPapers: () -> (vec record {id:text; title:text; content:text; reviews:vec text; votes:nat64; reviewStatus:text; author:principal; timestamp:nat64; abstract:text; citations:vec text}) query;
+    publishPaper: (text, text, text) -> (variant {Ok:record {id:text; title:text; content:text; reviews:vec text; votes:nat64; reviewStatus:text; author:principal; timestamp:nat64; abstract:text; citations:vec text}; Err:variant {InvalidInput:text; NotFound:text; NotAuthorized:text; AlreadyExists:text}});
+    submitReview: (text, text, nat64) -> (variant {Ok:record {id:text; content:text; timestamp:nat64; paperId:text; rating:nat64; reviewer:principal}; Err:variant {InvalidInput:text; NotFound:text; NotAuthorized:text; AlreadyExists:text}});
+    votePaper: (text) -> (variant {Ok:record {id:text; title:text; content:text; reviews:vec text; votes:nat64; reviewStatus:text; author:principal; timestamp:nat64; abstract:text; citations:vec text}; Err:variant {InvalidInput:text; NotFound:text; NotAuthorized:text; AlreadyExists:text}});
+}
