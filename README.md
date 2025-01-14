@@ -1,10 +1,11 @@
-# 🎓 
+# 🎓 SCIPP
 
 An approach to scientific publishing leveraging blockchain technology (ICP). This platform enables transparent, decentralized peer review and citations tracking while building researcher reputations.
 
 ## 🌟 Features
 
 ### Core Functionality
+
 - 📝 Paper Publication
   - Submit research papers with title, abstract, and content
   - Automatic timestamp and author tracking
@@ -21,6 +22,7 @@ An approach to scientific publishing leveraging blockchain technology (ICP). Thi
   - Build verifiable academic credentials
 
 ### Additional Features
+
 - 🗳️ Paper Voting System
 - 📈 Author Statistics
 - 🔍 Paper Discovery
@@ -29,6 +31,7 @@ An approach to scientific publishing leveraging blockchain technology (ICP). Thi
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js (v14.0 or higher)
 - DFX (latest version)
 - Internet Computer CLI
@@ -37,29 +40,34 @@ An approach to scientific publishing leveraging blockchain technology (ICP). Thi
 ### Installation
 
 1. Clone the repository
-```bash
-git clone https://github.com/tufstraka/scipp
-cd scipp
-```
+
+    ```bash
+    git clone https://github.com/tufstraka/scipp
+    cd scipp
+    ```
 
 2. Install dependencies
-```bash
-npm install
-```
+
+    ```bash
+    npm install
+    ```
 
 3. Start the local Internet Computer replica
-```bash
-dfx start --clean --background
-```
+
+    ```bash
+    dfx start --clean --background
+    ```
 
 4. Deploy the canister
-```bash
-dfx deploy
-```
+
+    ```bash
+    dfx deploy
+    ```
 
 ## 💻 Usage
 
 ### Publishing a Paper
+
 ```typescript
 // Example: Publishing a new paper
 const result = await actor.publishPaper(
@@ -69,7 +77,56 @@ const result = await actor.publishPaper(
 );
 ```
 
+### Get a Paper
+
+```typescript
+// Example: get a paper
+const result = await actor.getPaper(
+  "paper_id_here",
+);
+```
+
+### List all papers
+
+```typescript
+// Example: List all papers
+const result = await actor.listPapers();
+```
+
+### List Author papers
+
+```typescript
+// Example: List all papers by an author
+const result = await actor.getAuthorPapers("author_principal_here");
+```
+
+### Get User reputation
+
+```typescript
+// Example: Get user reputation
+const result = await actor.getReputation("principal_here");
+```
+
+### Upvoting a Paper
+
+```typescript
+// Example: upvoting a paper
+const result = await actor.upVotePaper(
+  "paper_id_here",
+);
+```
+
+### Downvoting a Paper
+
+```typescript
+// Example: downvoting a paper
+const result = await actor.downVotePaper(
+  "paper_id_here",
+);
+```
+
 ### Submitting a Review
+
 ```typescript
 // Example: Submitting a peer review
 const result = await actor.submitReview(
@@ -80,6 +137,7 @@ const result = await actor.submitReview(
 ```
 
 ### Citing Papers
+
 ```typescript
 // Example: Adding a citation
 const result = await actor.citePaper(
@@ -91,7 +149,13 @@ const result = await actor.citePaper(
 ## 🏗️ Architecture
 
 ### Data Structures
+
 ```typescript
+const ReviewStatus = Variant({
+    Pending: Null,
+    Reviewed: Null,
+});
+
 Paper {
     id: text,
     title: text,
@@ -100,9 +164,12 @@ Paper {
     author: Principal,
     timestamp: nat64,
     citations: Vec(text),
-    reviewStatus: text,
+    citedBy: Vec(text),
+    reviewStatus: ReviewStatus,
     reviews: Vec(text),
-    votes: nat64
+    upVotes: nat64,
+    downVotes: nat64,
+    votersList: Vec(Principal),
 }
 
 Review {
@@ -111,11 +178,12 @@ Review {
     reviewer: Principal,
     content: text,
     rating: nat64,
-    timestamp: nat64
+    timestamp: nat64,
 }
 ```
 
 ### Storage
+
 - Utilizes `StableBTreeMap` for persistent storage
 - Separate maps for papers, reviews, and user reputations
 - Efficient querying and updates
@@ -131,18 +199,21 @@ Review {
 ## 🛣️ Roadmap
 
 ### Phase 1 (Current)
+
 - ✅ Basic paper publication
 - ✅ Peer review system
 - ✅ Citation tracking
 - ✅ Simple reputation system
 
 ### Phase 2 (Planned)
+
 - 🔄 Paper versioning
 - 💰 Token-based incentives
 - 📊 Advanced analytics
 - 🤝 Collaboration features
 
 ### Phase 3 (Future)
+
 - 🔍 AI-powered paper recommendations
 - 🌐 Cross-chain integration
 - 📱 Mobile application
